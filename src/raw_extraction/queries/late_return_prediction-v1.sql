@@ -30,4 +30,4 @@ JOIN category c ON fc.category_id = c.category_id
 JOIN customer cust ON r.customer_id = cust.customer_id
 JOIN store s ON i.store_id = s.store_id
 -- We only want records where the item has actually been returned to train the model
-WHERE r.return_date IS NOT NULL;
+WHERE r.return_date IS NOT NULL

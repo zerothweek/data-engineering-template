@@ -9,7 +9,7 @@ import argparse
 import subprocess
 from pathlib import Path
 from datetime import datetime
-from el_lib import DataPipelineEngine
+from pipeline_engine import DataPipelineEngine
 
 # --- Setup Logging ---
 logging.basicConfig(
@@ -35,8 +35,6 @@ def get_git_hash():
 def main():
     parser = argparse.ArgumentParser(description="Enterprise Big Data ELT Pipeline")
     parser.add_argument("job_name", help="Job name from config")
-    parser.add_argument("--version", type=str, default=None, help="Custom version label (e.g. v1.0)")
-    parser.add_argument("--annotation", type=str, default="", help="Run description")
     parser.add_argument("--config", type=str, default="pipeline_config.yaml", help="Config file path")
     parser.add_argument("--format", type=str, choices=['parquet', 'csv'], help="Override output format")
     
@@ -58,12 +56,12 @@ def main():
     start_time = time.time()
     
     # 3. Setup Paths & Format
-    version_id = args.version if args.version else datetime.now().strftime("%Y%m%d_%H%M%S")
+    version_id = job_config["version"]
     base_path = Path(engine_lib.config['storage']['base_path'])
     output_dir = base_path / args.job_name / version_id
     
     # Safety check
-    if output_dir.exists() and args.version:
+    if output_dir.exists():
         logger.error(f"Version {version_id} already exists.")
         sys.exit(1)
         
@@ -89,7 +87,11 @@ def main():
     # 4. EXECUTION
     try:
         db_engine = engine_lib.get_connection_engine(job_config['connection'])
-        query = job_config['query']
+        
+        file_path = job_config['query_file']
+        # Open the file and read its content into the 'query' variable
+        with open(file_path, 'r') as f:
+            query = f.read()
         chunk_size = engine_lib.config.get('execution', {}).get('chunk_size', 50000)
 
         # A. Get Count (for progress bar)
@@ -117,7 +119,7 @@ def main():
             "rows": total_rows,
             "duration_sec": round(duration, 2),
             "git_hash": get_git_hash(),
-            "annotation": args.annotation,
+            "annotation": job_config["annotation"],
             "command": f"python {' '.join(sys.argv)}"
         }
         

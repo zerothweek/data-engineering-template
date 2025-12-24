@@ -23,7 +23,7 @@ connections:
     drivername: "mysql+pymysql"
     username: "root"
     password_env_var: "MYSQL_ROOT_PASSWORD" # The script will look for os.environ['MYSQL_ROOT_PASSWORD']
-    host: "example-mysql-db-network"
+    host: "example-mysql-db-server"
     port: 3306
     database: "sakila"
 
@@ -32,9 +32,8 @@ connections:
 jobs:
   late_return_prediction:
     connection: "mysql_db_sakila" # References the connection above
-    description: "raw data for Predicting if a customer will return a DVD late."
-    # Option A: Inline Query (Good for simple selects)
-    #query: "SELECT * FROM actor"
-    query_file: "queries/late_return_prediction.sql" 
+    annotation: "raw data for Predicting if a customer will return a DVD late."
+    version: "v1"
+    query_file: "queries/late_return_prediction-v1.sql" 
     tags: ["ml", "dvd_late_return_pred", "csv_conversion_test"]
     

@@ -2,7 +2,7 @@ services:
   app:
   
     # DEFINE the exact image to look for:
-    image: data-engineering-template:v0.0.1
+    image: data-engineering:v0.0.1
     
     container_name: data-engineering
   
