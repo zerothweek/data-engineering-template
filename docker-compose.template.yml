@@ -1,0 +1,32 @@
+services:
+  app:
+  
+    # DEFINE the exact image to look for:
+    image: data-engineering-template:v0.0.1
+    
+    container_name: data-engineering
+  
+    # RUNTIME CONFIGURATION
+    # Since we removed 'sleep infinity' from the Dockerfile, we need it here
+    # to keep the container alive for development.
+    command: sleep infinity
+    
+    # mounting
+    volumes:
+      # Mount code live so you can edit without rebuilding
+      - ./src:/app/src
+      - ./pyproject.toml:/app/pyproject.toml
+      - ./uv.lock:/app/uv.lock
+      - ./README.md:/app/README.md
+      
+    env_file: 
+      - .env
+    
+    networks:
+      - mysql-net
+
+networks:
+  mysql-net:
+    external: true
+    name: example-mysql-db-network
+

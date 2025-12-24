@@ -1,0 +1,31 @@
+# 1. Python Artifacts
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# 2. Local Virtual Environments
+# The standard local one (if you have one)
+.venv/
+env/
+venv/
+
+# 3. Docker-Specific Mounts (CRITICAL)
+# This is the folder we mounted in compose to get autocomplete. 
+# It contains Linux binaries; DO NOT commit this to Git.
+.venv_docker/
+
+# 4. Environment Variables / Secrets
+.env
+
+# 5. IDE Settings
+.vscode/
+.idea/
+
+# 6. docker
+docker-compose.yml
+
+# 7. data
+data_lake/

@@ -1,0 +1,24 @@
+# 1. Version Control (Massive speedup)
+.git/
+.gitignore
+
+# 2. Python Artifacts
+__pycache__/
+*.pyc
+
+# 3. Virtual Environments
+# NEVER copy a local venv into a Docker image. 
+# The Dockerfile builds its own clean one in /opt/venv.
+.venv/
+.venv_docker/
+
+# 4. Documentation/Tests (Optional, usually not needed in prod image)
+docs/
+tests/
+
+# 5. development environment related files
+.dockerignore
+.python-version
+docker-compose.template.yml
+docker-compose.yml
+Dockerfile

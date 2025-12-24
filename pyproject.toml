@@ -1,0 +1,47 @@
+[project]
+name = "data-engineering-template"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = "==3.12.*"
+
+
+# BASE: Absolute Essentials (Config & Logging only)
+# Keeps the environment lightweight for simple scripts.
+dependencies = [
+    "python-dotenv>=1.2.1",
+    "pyyaml>=6.0.3",
+    "tqdm>=4.67.1",
+]
+
+# GROUPS: Categorized Workflows
+[dependency-groups]
+
+# Group: Data Engineering
+data = [
+    "fastparquet>=2024.11.0",
+    "pandas>=2.3.3",
+    "polars>=1.35.2",
+    "pyarrow>=22.0.0",
+]
+
+# Group: Database Connectivity
+db = [
+    "pymysql[rsa]>=1.1.2",
+    "sqlalchemy>=2.0.44",
+]
+
+# Group: Exploratory Data Analysis
+eda = [
+    "matplotlib>=3.10.7",
+    "seaborn>=0.13.2",
+]
+
+
+# Group: Development Tools
+dev = [
+    "ipykernel>=7.1.0",
+]
+
+
+
